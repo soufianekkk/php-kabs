@@ -17,11 +17,10 @@ session_start();
 
         
             <nav class="col-sm-3 my-2">
-               <a href="index.php"
-                    type="button" class="btn btn-light border-dark btn-block  ">Home
-               </a>
+               <a href="index.php"type="button" class="btn btn-light border-dark btn-block  ">Home</a> 
 
-               <?php
+                <?php
+                //Vérifier si la session n'est pas vide  pour affichage du ul
                 if(!empty($_SESSION)) {
                    include 'includes/ul.inc.html';
                    $table=$_SESSION['table'];
@@ -31,10 +30,11 @@ session_start();
             <section class=" col-sm-9 my-2">
                 
                 <?php 
+                //Vérifier si il y'a add dans url et include formulaire
                     if(isset($_GET ["add"]))  {
                         include 'includes/form.inc.html';
                     }
-            
+                //Déclarations de variable et placement dans tableau 
                     elseif (isset($_POST["envoyer"])) {
                       $prénom= $_POST["Prenom"] ;
                       $nom= $_POST["Nom"];
@@ -53,12 +53,12 @@ session_start();
 
                       echo "<h1>Données sauvegardées</h1>" ;
                     }
-                    
+                    //Vérifie si il y'a del sur url alors suprrimé session
                     elseif(isset($_GET['del'])){
                         unset($_SESSION['table']);
                         echo "<h1>Les données ont bien été supprimées</h1>";
                     }
-                    
+                    //Vérifie si il y'a debugging sur url alors afficher contenue du tableau 
                     elseif(isset($_GET['debugging'])){
                         echo "<h2>Débogage</h2> <br> <p> ===> Lecture du tableau à l'aide de la fonction print_r()";
                         
@@ -67,6 +67,7 @@ session_start();
                         print "</pre>";
                     }
 
+                    //Vérifie si il y'a concatenation sur url alors affiche les differente options
                     elseif (isset($_GET['concatenation'])) {
                         echo "<h2>Concatenation</h2> <br> <p> ===> Construction d'une phrase avec le contenu du tableau :";
                         echo "<h3>" .$table['Prénom']. " " .$table['Nom']. "</h3>";
@@ -87,6 +88,7 @@ session_start();
                         echo "<p>" . " " . $table['age'] . " " . "ans," . " " . "je mesure" ." " . $table['taille'] . "m" . " " . "et je sui en formation chez simplon". "</p>";
 
                     }
+                    //Créer une boucle avec le forech
                     elseif (isset($_GET['boucle'])) {
                         echo "<h2>Boucle</h2> <br> <p> ===> Lecture du tableau à l'aide d'une boucle foreach</p> ";
                         
@@ -96,6 +98,7 @@ session_start();
                         }
 
                     }
+                    //Inserer le foreach dans une fonctions read table (déclarer et appeler a fonction)
                     elseif (isset($_GET['function'])) {
                         echo "<h2>Fonction</h2> <br> <p> ===> J'utilise ma fonction readTable() </p> ";
                        
@@ -110,7 +113,7 @@ session_start();
                     readTable($table);
 
                     }
-
+                    //Sinon afficher bouton ajouter des donner 
                     else{
                         echo '<a href="index.php?add">
 
